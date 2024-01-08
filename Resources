@@ -1,0 +1,39 @@
+Here are some of the sources I looked through:
+
+
+https://monovm.com/blog/what-is-ssh-port/#What-is-SSH-port?
+
+https://crontab.guru/#*/10_*_*_*_*
+
+https://www.thegeekdiary.com/redhat-centos-a-beginners-guide-to-lvm-logical-volume-manager/#google_vignette
+
+
+Configuring sudo (command to open the sudoers file directly : sudo visudo)
+
+you will need to create the Defaults logfile path, the directory sudo and the file sudo.log
+
+(keep the already existing Defaults)
+************************************************************
+ Defaults      passwd_tries=3                             
+ Defaults      badpass_message="Incorrect password"       <- changable to whatever you want it to be
+ Defaults      log_input,log_output
+ Defaults      logfile="/var/log/sudo/sudo.log"            <- for sudo commands input (1 : {sudo.log})
+ Defaults      iolog_dir="/var/log/sudo"                   <- for output (2 : {seq and 00})
+ Defaults      requiretty                                 
+ Defaults      secure_path="path/where/sudo/finds/commands"  <- it already exists in defaults, (you don't need to add snap like in the subject because snap doesn't exist)
+************************************************************
+
+Password policy:
+
+[$ sudo apt install libpam-pwquality]
+[$ sudo nano /etc/pam.d/common-password]
+Add to the end of the "password requisite pam_pwqiality.so retry=3" line next
+parameters
+
+You should add this to it:
+password  requisite     pam_pwquality.so  retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username difok=7 enforce_for_root
+
+
+
+
+[the rest of what is asked of us to configure and add are easily found on the internet! Good luck on your search.]
